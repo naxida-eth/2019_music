@@ -1,0 +1,127 @@
+h1, h2{
+font-weight: normal;
+}
+ul{
+    display: flex;
+    width: 80%;
+    min-width: 600px;
+    margin: auto;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+}
+ul label{
+    width: 56%;
+}
+ul span{
+    width: 32%
+}
+.musicsList {
+    display: flex;
+    width: 72%;
+    min-width: 1200px;
+    margin-top: 40px;
+    justify-content: space-around;
+    align-items: center;
+}
+.musicsList li{
+    display: flex;
+    width: 32%;
+    height: 300px;
+    margin-bottom: 24px;
+    color: #333333;
+    align-items: center;
+    background: #6ca4c548;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    opacity: .95;
+}
+.musicsList li img{
+    width: 60%;
+}
+.musicsList li .music_text{
+    display:flex;
+    width: 28%;
+    flex-wrap:wrap;
+    justify-content: center;
+    align-content: space-around;
+}
+.musicsList li .music_text span{
+    margin-top:20px; 
+    width: 80%;
+}
+.warp{
+    width: 100%;
+    min-width: 1200px;
+    margin: auto;
+} 
+.warp .audio_search{
+    display: flex;
+    width: 80%;
+    min-width: 600px;
+    margin: auto;
+    justify-content: space-around;
+    align-items: center;
+}
+.warp .audio_search input{
+    width: 200px;
+    height: 40px;
+    text-indent: 12px;
+}
+.musicsList li:hover img{
+    width: 66%;
+}
+
+/* .warp>ul{
+    display: flex;
+    width: 80%;
+    min-width: 600px;
+    margin: auto;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+}
+.warp>ul li{
+    width: 100%
+}
+.warp>ul label{
+    width: 56%
+}
+.warp>ul span{
+    width: 32%
+} */
+
+/* .warp>.musicsList {
+    display: flex;
+    width: 72%;
+    min-width: 1200px;
+    margin-top: 40px;
+    justify-content: space-around;
+    align-items: center;
+}
+.warp>.musicsList li{
+    display: flex;
+    width: 32%;
+    height: 300px;
+    margin-bottom: 24px;
+    color: #333333;
+    align-items: center;
+    background: #6ca4c5;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    
+}
+.warp>.musicsList li img{
+    width: 60%;
+}
+.warp>.musicsList li .music_text{
+    display:flex;
+    width: 32%;
+    flex-wrap:wrap;
+    justify-content: center;
+    align-content: space-around;
+}
+.warp>.musicsList li .music_text span{
+    margin-top:20px; 
+    width: 80%
+} */
