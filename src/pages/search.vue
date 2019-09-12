@@ -9,6 +9,21 @@
         </div>
       </li>
     </ul>
+    <div class="playMusic img-circle">
+      <div class="playMusic_img">
+        <img
+          :src="music.musicImg"
+          class="img-circle"
+          @click="musicMore(music.musicId)"
+          :alt="music.musicName"
+        />
+      </div>
+      <audio :src="musicUrl+music.musicId" controls="controls" autoplay="autoplay"></audio>
+      <div class="playMusic_span">
+        <span>{{music.musicName}}</span>
+        <span>{{music.songer}}</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -22,12 +37,43 @@ export default {
       searchText: "",
       musicSearch: "http://www.young1024.com:666/search?keywords=",
       musicTextUrl: "http://www.young1024.com:666/song/detail?ids=",
+      musicMoreUrl: "http://www.young1024.com:666/song/detail?ids=",
+      musicUrl: "https://music.163.com/song/media/outer/url?id=",
       musics: [],
-      musicList: []
+      musicList: [],
+      music: []
     };
   },
   methods: {
     playMusic(musicId) {
+      let me = this;
+      let musicMoreUrl = me.musicMoreUrl + musicId;
+      me.$http.get(musicMoreUrl).then(res => {
+        if (res.data.code === 200) {
+          let music = res.data.songs[0];
+          console.log(music);
+          let musicName = music.name;
+          let musicImg = music.al.picUrl;
+          let leng = music.ar.length;
+          leng = leng > 3 ? 3 : leng;
+          let songer = "";
+          for (let j = 0; j < leng; j++) {
+            songer = songer + "&" + music.ar[j].name;
+          }
+          // console.log(musicName);
+          // console.log(musicImg);
+          // console.log(songer);
+          me.music = {
+            musicId: musicId,
+            musicName: musicName,
+            musicImg: musicImg,
+            songer: songer
+          };
+          // console.log(me.music);
+        }
+      });
+    },
+    musicMore(musicId) {
       let me = this;
       me.$router.push({
         path: "playMusic",
@@ -67,7 +113,7 @@ export default {
                 for (let j = 0; j < leng; j++) {
                   songer = songer + "&" + ress.data.songs[0].ar[j].name;
                 }
-                let imgUrl = ress.data.songs[0].al.picUrl;
+                let imgUrl = ress.data.songs[0].al.picUrl + "?param=230y230";
                 me.musicList.push({
                   id: id,
                   name: name,
@@ -99,13 +145,12 @@ export default {
   margin: 40px auto 0;
   flex-wrap: wrap;
   justify-content: space-around;
-  align-content: space-around;
+  align-items: center;
 }
 .musicsList li {
   display: flex;
   width: 32%;
-  height: 312px;
-  padding: 24px;
+  height: 300px;
   margin-bottom: 24px;
   color: #333333;
   align-items: center;
@@ -114,7 +159,13 @@ export default {
   justify-content: space-around;
   opacity: 0.95;
 }
-.musicsList li img {
+/* .musicsList li .musicsList_img {
+  width: 60%;
+  min-width: 230px;
+  height: 230px;
+   margin: auto; 
+} */
+.musicsList li .musicsList_img img {
   width: 60%;
 }
 .musicsList li .music_text {
@@ -130,6 +181,48 @@ export default {
   width: 80%;
 }
 .musicsList li:hover img {
+  width: 66%;
+}
+
+
+.searchMusic .playMusic {
+  position: fixed;
+  display: flex;
+  width: 300px;
+  height: 300px;
+  left: 40px;
+  bottom: 20px;
+  background: rgba(33, 166, 219, 0.459);
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+.searchMusic .playMusic .playMusic_img {
+  display: flex;
+  width: 100%;
+  height: 120px;
+  align-items: center;
+}
+.searchMusic .playMusic .playMusic_img img {
+  width: 30%;
+  margin: auto;
+}
+.searchMusic .playMusic img:hover {
+  width: 36%;
+}
+.searchMusic .playMusic audio {
   width: 70%;
+}
+.searchMusic .playMusic .playMusic_span {
+  width: 100%;
+  height: 90px;
+  padding: 0 40px 30px;
+}
+.searchMusic .playMusic .playMusic_span span {
+  width: 42%;
+  height: 90px;
+  font-size: 12px;
+  line-height: 36px;
+  text-align: center;
 }
 </style>

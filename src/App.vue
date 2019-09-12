@@ -29,7 +29,7 @@ export default {
       ],
       musicId: "",
       searchText: "",
-      musicSearch: "http://www.young1024.com:666/search?keywords="
+      musicSearch: "http://www.young1024.com:666/search?keywords=",
     };
   },
   methods: {
