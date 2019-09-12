@@ -1,98 +1,118 @@
 <template>
   <div class="warp">
-    <div class="header">
-      <ul>
-        <li class="header_li_logo">
-          <label>Music</label>
-        </li>
-        <li class="header_li_menu" v-for="item in headMenuUl" :key="item.id">{{item.name}}</li>
-        <li class="header_li_search">
-          <input type="text" v-model="search" v-on:change="getMusic" />
-        </li>
-        <li class="header_li_audio">
-          <audio id="audio" v-bind:src="musicUrl+musicId" controls="controls" autoplay="autoplay"></audio>
+    <div class="sliper">
+      <swiper :options="swiperOption" ref="mySwiper">
+        <swiper-slide v-for="musicImg in musicImgList" :key="musicImg.musicId">
+          <img v-on:click="playSwiperMusic(musicImg.musicId)" :src="musicImg.imgUrl" alt />
+        </swiper-slide>
+      </swiper>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+    <div class="searchMusic">
+      <ul class="musicsList">
+        <li v-for="music in musicList" v-on:click="playMusic(music.id)" :key="music.id">
+          <img :src="music.imgUrl" alt />
+          <div class="music_text">
+            <span>{{music.name}}</span>
+            <span>{{music.songer}}</span>
+          </div>
         </li>
       </ul>
     </div>
-    <div class="lyric" id="lyric">
-      <ul>
-        <li :id="lyric.lyric_id" v-for="lyric in musicLyric" :key="lyric.lyricId">
-          <p>{{lyric.lyric}}</p>
-        </li>
-      </ul>
-    </div>
-    <ul class="musicsList">
-      <li v-for="music in musicList" :key="music.id">
-        <img :src="music.imgUrl" alt />
-        <div class="musicsList">
-          <span>{{music.name}}</span>
-          <span>{{music.songer}}</span>
-        </div>
-        <span v-on:click="playMusic(music.id)">播放</span>
-      </li>
-    </ul>
   </div>
 </template>
 
 <script>
+import { swiper, swiperSlide } from "vue-awesome-swiper";
 export default {
+  components: {
+    swiper,
+    swiperSlide
+  },
   name: "index",
+  computed: {
+    swiper() {
+      return this.$refs.mySwiper.swiper;
+    }
+  },
   data() {
     return {
-      headMenuUl: [
-        { name: "发现音乐", id: 1 },
-        { name: "音乐排行榜", id: 2 },
-        { name: "待续", id: 3 }
-      ],
+      // swiper配置
+      swiperOption: {
+        autoplay: {
+          delay: 3000, //1秒切换一次
+          disableOnInteraction: false
+        },
+        pagination: {
+          el: ".swiper-pagination"
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        },
+        effect: "coverflow",
+        slidesPerView: 2,
+        centeredSlides: true
+      },
       //   musicSearch: "http://musicapi.leanapp.cn/search?keywords=",
-      musicSearch: "http://www.young1024.com:666/search?keywords=",
-      musicUrl: "https://music.163.com/song/media/outer/url?id=",
-      musicLyricUrl: "https://api.imjad.cn/cloudmusic/?type=lyric&id=",
       musicHot: "http://www.young1024.com:666/top/list?idx=1",
-      musicLyric: [],
+      musicImgList: [
+        {
+          imgUrl: require("../assets/images/slider01.jpg"),
+          musicId: "1388126434"
+        },
+        {
+          imgUrl: require("../assets/images/slider02.jpg"),
+          musicId: "502043537"
+        },
+        {
+          imgUrl: require("../assets/images/slider03.jpg"),
+          musicId: "1388799904"
+        },
+        {
+          imgUrl: require("../assets/images/slider04.jpg"),
+          musicId: "1389040913"
+        },
+        {
+          imgUrl: require("../assets/images/slider05.jpg"),
+          musicId: "1389071605"
+        },
+        {
+          imgUrl: require("../assets/images/slider06.jpg"),
+          musicId: "81401908"
+        },
+        {
+          imgUrl: require("../assets/images/slider07.jpg"),
+          musicId: "1388975952"
+        }
+      ],
       musics: [],
       musicId: "",
-      search: "",
+      searchText: "",
       hotMusicsId: [],
       musicTextUrl: "http://www.young1024.com:666/song/detail?ids=",
       musicList: []
     };
   },
   methods: {
-    getMusic() {
+    playMusic(musicId) {
       let me = this;
-      let url = me.musicSearch + me.search;
-      console.log(url);
-      me.$http.get(url).then(res => {
-        console.log(res.data);
-        if (res.data.code === 200) {
-          console.log(res.data.result.songs);
-          me.musics = res.data.result.songs;
-          console.log(me.musics);
+      me.$router.push({
+        path: "playMusic",
+        query: {
+          musicId: musicId
         }
       });
     },
-    playMusic(musicId) {
+    playSwiperMusic(musicId) {
       let me = this;
-      let url = me.musicLyricUrl + musicId;
-      me.musicId = musicId;
-      me.$http.get(url).then(res => {
-        let musicLyric = res.data.lrc.lyric;
-        musicLyric = musicLyric.replace(/(\r\n)|(\n)/g, "");
-        musicLyric = musicLyric.split("[");
-        me.musicLyric=[];
-        for (let i = 0, len = musicLyric.length; i < len; i++) {
-          let musicLyric_time_and_lyric = musicLyric[i].split("]");
-          let time = musicLyric_time_and_lyric[0];
-          let lyric = musicLyric_time_and_lyric[1];
-          let timer = time.split(".");
-          let haomiao = timer[1];
-          let fenzhong = timer[0].split(":");
-          let miaoshu = fenzhong[0] * 60 + fenzhong[1] * 1;
-          
-          me.musicLyric.push({ lyric_id: miaoshu, lyric: lyric });
+      me.$router.push({
+        path: "playMusic",
+        query: {
+          musicId: musicId
         }
-        // console.log(me.musicLyric);
       });
     }
   },
@@ -126,27 +146,27 @@ export default {
             // console.log(me.musicList);
           });
         }
-        console.log(me.hotMusicsId);
-        console.log(me.musicList);
+        // console.log(me.hotMusicsId);
+        // console.log(me.musicList);
       }
     });
+      //  me.mySwiper.autoplay.stop();
   }
 };
-$(function() {
-  $("#audio")[0].addEventListener("timeupdate", function() {
-    let time = this.currentTime;
-    let timer = parseInt(time);
-    for (var i = 0; i < timer; i++) {
-      $("#" + i)
-        .stop()
-        .slideDown(300)
-        .siblings()
-        .hide();
-    }
-  });
-});
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import "../assets/css/index.css";
+.sliper {
+  position: relative;
+  width: 80%;
+  min-width: 1200px;
+  margin: auto;
+}
+.sliper .swiper-pagination {
+  position: relative;
+}
+.sliper .swiper-pagination span + span {
+  margin-left: 20px;
+}
 </style>

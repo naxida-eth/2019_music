@@ -2,95 +2,59 @@ h1, h2{
 font-weight: normal;
 }
 ul{
-list-style-type: none;
-padding: 0;
+    display: flex;
+    width: 80%;
+    min-width: 600px;
+    margin: auto;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
 }
-li{
-display: inline-block;
-margin: 0 10px;
+ul label{
+    width: 56%;
 }
-a{
-color: #42b983;
+ul span{
+    width: 32%
+}
+.musicsList {
+    display: flex;
+    width: 72%;
+    min-width: 1200px;
+    margin-top: 40px;
+    justify-content: space-around;
+    align-items: center;
+}
+.musicsList li{
+    display: flex;
+    width: 32%;
+    height: 300px;
+    margin-bottom: 24px;
+    color: #333333;
+    align-items: center;
+    background: #6ca4c548;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    opacity: .95;
+}
+.musicsList li img{
+    width: 60%;
+}
+.musicsList li .music_text{
+    display:flex;
+    width: 28%;
+    flex-wrap:wrap;
+    justify-content: center;
+    align-content: space-around;
+}
+.musicsList li .music_text span{
+    margin-top:20px; 
+    width: 80%;
 }
 .warp{
     width: 100%;
     min-width: 1200px;
     margin: auto;
 } 
- .header{
-    width: 100%;
-    min-width: 1200px;
-    height: 68px;
-    padding: 0;
-    color: #cccccc;
-    background: #242424;
-} 
-.header ul{
-    display: flex;
-    width: 72%;
-    min-width: 1200px;
-    height: 68px;
-    margin: 0 auto;
-    padding: 0 64px;
-    justify-content: space-around;
-    align-items: center;
-}
-.header ul>li{
-    line-height: 68px;
-}
-.header ul .header_li_logo{
-    color: #FFF;
-    padding-left: 60px;
-    font-size: 18px;
-    background: url(../images/logo.png) 12px center no-repeat;
-} 
-.header ul .header_li_logo label{
-    margin-bottom: 0;
-}
-.header ul .header_li_menu{
-    padding: 0;
-    margin: 0;
-}
-/* .header ul li.header_li_menu+li.header_li_menu {
-    margin-left: 10px;
-} */
-.header ul li.header_li_search{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.header ul li.header_li_search input{
-    height: 36px;
-    color: #242424;
-    text-indent: 10px;
-    line-height: 38px;
-}
-.header ul li.header_li_audio{
-
-    display: flex;
-    align-items: center;
-}
-.warp .lyric{
-    position: fixed;
-    bottom: 80px;
-}
- .warp .lyric ul{
-    position: relative;
-    height: 40px;
-    width: 80%;
-    min-width: 600px;
-    margin: auto;
-    text-align: center;
- }
-.warp .lyric ul li{
-    position: absolute;
-    display: none;
-    top: 0;
-    width: 100%;
-    font-size: 32px;
-    line-height: 40px;
-}
-
 .warp .audio_search{
     display: flex;
     width: 80%;
@@ -104,7 +68,11 @@ color: #42b983;
     height: 40px;
     text-indent: 12px;
 }
-.warp>ul{
+.musicsList li:hover img{
+    width: 66%;
+}
+
+/* .warp>ul{
     display: flex;
     width: 80%;
     min-width: 600px;
@@ -121,9 +89,9 @@ color: #42b983;
 }
 .warp>ul span{
     width: 32%
-}
+} */
 
-.warp>.musicsList {
+/* .warp>.musicsList {
     display: flex;
     width: 72%;
     min-width: 1200px;
@@ -156,4 +124,4 @@ color: #42b983;
 .warp>.musicsList li .music_text span{
     margin-top:20px; 
     width: 80%
-}
+} */

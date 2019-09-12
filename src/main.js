@@ -7,10 +7,12 @@ import axios from 'axios'
 import $ from 'jquery'
 import 'bootstrap3/dist/js/bootstrap.min.js'
 import 'bootstrap3/dist/css/bootstrap.min.css'
+import 'swiper/dist/css/swiper.css'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
-
+Vue.use(VueAwesomeSwiper)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
